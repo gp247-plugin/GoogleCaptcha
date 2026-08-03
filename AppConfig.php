@@ -134,7 +134,7 @@ class AppConfig extends ExtensionConfigDefault
             ->where('key', $this->configKey)
             ->update(['value' => self::OFF]);
         if (!$process) {
-            $return = ['error' => 1, 'msg' => 'Error disable'];
+            $return = ['error' => 1, 'msg' => gp247_language_render('admin.extension.action_error', ['action' => 'Disable'])];
         }
 
         //Admin config home
@@ -163,15 +163,7 @@ class AppConfig extends ExtensionConfigDefault
     
     public function clickApp()
     {
-        return view($this->appPath . '::Admin')->with(
-            [
-                'appPath' => $this->appPath,
-                'code'       => $this->configCode,
-                'key'        => $this->configKey,
-                'title'      => $this->title,
-                'breadcrumb' => [],
-            ]
-        );
+        return redirect(gp247_route_admin('admin_googlecaptcha.index'));
     }
 
     /**

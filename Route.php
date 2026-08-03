@@ -23,10 +23,9 @@ if(gp247_extension_check_active($config['configGroup'], $config['configKey'])) {
         [
             'prefix' => GP247_ADMIN_PREFIX.'/googlecaptcha',
             'middleware' => GP247_ADMIN_MIDDLEWARE,
-            'namespace' => '\App\GP247\Plugins\GoogleCaptcha\Admin',
-        ], 
+        ],
         function () {
-            Route::get('/', 'AdminController@index')
+            Route::get('/', \App\GP247\Plugins\GoogleCaptcha\Livewire\AdminLivewire::class)
             ->name('admin_googlecaptcha.index');
         }
     );
