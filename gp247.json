@@ -8,8 +8,8 @@
     "configCode": "GoogleCaptcha",
     "configKey": "GoogleCaptcha",
     "version": "2.0",
-    "requireCore": ["2.0"],
+    "requireCore": ["2.1"],
     "requireUpdateFrom": "2.0",
-    "requirePackages": ["gp247/front"],
-    "requireExtensions": []
+    "requireComposerPackages": ["gp247/front"],
+    "requireGp247Extensions": []
 }
