@@ -46,6 +46,9 @@ class AppConfig extends ExtensionConfigDefault
         } else {
             //Insert plugin to config
             $dataInsert = [
+                // WHY every row carries 'security': AdminConfig::insert() takes the column
+                // list from the first row, so all rows must share the same keys — the secret
+                // key needs security=1, the others an explicit 0.
                 [
                     'group'  => $this->configGroup,
                     'code'    => $this->configCode,
@@ -53,6 +56,7 @@ class AppConfig extends ExtensionConfigDefault
                     'sort'   => 0,
                     'store_id' => GP247_STORE_ID_GLOBAL,
                     'value'  => self::ON, //Enable extension
+                    'security' => 0,
                     'detail' => $this->appPath.'::lang.title',
                 ],
                 [
@@ -62,6 +66,11 @@ class AppConfig extends ExtensionConfigDefault
                     'sort'   => 0,
                     'store_id' => GP247_STORE_ID_GLOBAL,
                     'value'  => "",
+                    // Secret at rest: flag so fresh installs encrypt the reCAPTCHA secret key
+                    // the moment it is saved (ConfigForm write-choke). Upgrades already flagged
+                    // by core migration 2026_09_03_230100. Seed value is empty ⇒ nothing to
+                    // encrypt now; the flag takes effect on the first real save.
+                    'security' => 1,
                     'detail' => $this->appPath.'::lang.secrect_key',
                 ],
                 [
@@ -71,6 +80,7 @@ class AppConfig extends ExtensionConfigDefault
                     'sort'   => 0,
                     'store_id' => GP247_STORE_ID_GLOBAL,
                     'value'  => "",
+                    'security' => 0,
                     'detail' => $this->appPath.'::lang.site_key',
                 ],
             ];
