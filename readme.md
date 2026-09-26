@@ -58,6 +58,27 @@ The captcha box **only appears** when **all** of the conditions below are met. I
 3. Find the **GoogleCaptcha** card and click **Install**.
 4. After it installs, click **Enable** on the same card. On success the plugin switches to the enabled state.
 
+### Install from the command line (CLI, gp247 3.x)
+
+This is an alternative to the 4 admin actions above. Since gp247 3.x you can download **GoogleCaptcha** from the GP247 library and install it straight from the command line, without opening the admin. The plugin requires the `gp247/front` package on the website. Open a terminal in the website's root folder and run:
+
+```bash
+# 1) Once per website: register the (free) API License that connects the site to the GP247 library
+php artisan gp247:ext-register-license
+
+# 2) Download the plugin from the library and install it
+php artisan gp247:ext-install --type=plugin --key=GoogleCaptcha
+```
+
+- Before step 1, make sure `APP_URL` in `.env` is the website's **real domain** (not `http://localhost`) — the license is bound to that domain.
+- Once installed, the plugin is **enabled** and caches are refreshed automatically; you no longer need to click Install/Enable in the admin.
+- The command checks the requirements declared in `gp247.json` (core version, composer packages, required plugins) and stops with a clear message if something is missing (e.g. `gp247/front` is not installed).
+- If the folder `app/GP247/Plugins/GoogleCaptcha` is already on the server (copied manually or shipped with the installer), the command **installs it in place** instead of downloading it again.
+- The command refuses a plugin that is already installed. To move to a newer version, run `php artisan gp247:ext-update --type=plugin --key=GoogleCaptcha`.
+- Append `--json` to get machine-readable output (for scripts/CI).
+- The post-install configuration steps below still apply: you still need **Step 3** (enter the Site Key & Secret Key) and **Step 4** (enable captcha, choose pages) before the captcha box appears.
+- More: [Installing Plugins & Templates](https://github.com/gp247net/gp247-docs/blob/main/extension/install-extension.md) · [Command reference](https://github.com/gp247net/gp247-docs/blob/main/system/command-line-reference.md).
+
 ## Step 3 — Enter the Site Key & Secret Key
 
 1. Still under **Extension → Plugins**, click **GoogleCaptcha** to open its config screen.
@@ -160,4 +181,4 @@ No. The keys are preserved because they are stored in the same location as befor
 
 ---
 
-<sub>📅 **Last updated:** 2026-08-03 · ✍️ **Author:** GP247</sub>
+<sub>📅 **Last updated:** 2026-09-25 · ✍️ **Author:** GP247</sub>

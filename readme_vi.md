@@ -58,6 +58,27 @@ Plugin này giúp website GP247 của bạn chặn spam (đăng ký ảo, gửi 
 3. Tìm ô **GoogleCaptcha**, nhấn nút **Install** (Cài đặt).
 4. Sau khi cài xong, ở ngay ô đó nhấn tiếp **Enable** (Bật). Nếu thành công, plugin chuyển sang trạng thái đang bật.
 
+### Cài bằng dòng lệnh (CLI, gp247 3.x)
+
+Đây là cách thay thế cho 4 thao tác trong admin ở trên. Từ gp247 3.x, bạn có thể tải **GoogleCaptcha** từ thư viện GP247 và cài ngay bằng dòng lệnh mà không cần mở admin. Plugin yêu cầu website đã cài gói `gp247/front`. Mở Terminal tại thư mục gốc website rồi chạy:
+
+```bash
+# 1) Chỉ làm 1 lần cho mỗi website: đăng ký API License (miễn phí) để kết nối thư viện GP247
+php artisan gp247:ext-register-license
+
+# 2) Tải plugin từ thư viện và cài
+php artisan gp247:ext-install --type=plugin --key=GoogleCaptcha
+```
+
+- Trước bước 1, kiểm tra `APP_URL` trong `.env` là **domain thật** của website (không để `http://localhost`), vì license được gắn với domain này.
+- Cài xong, plugin được **bật sẵn** và cache tự làm mới, bạn không cần nhấn Install/Enable trong admin nữa.
+- Lệnh tự kiểm tra điều kiện khai báo trong `gp247.json` (phiên bản core, gói composer, plugin phụ thuộc). Nếu thiếu, lệnh dừng lại và báo rõ thiếu gì (ví dụ website chưa có `gp247/front`).
+- Nếu thư mục `app/GP247/Plugins/GoogleCaptcha` đã có sẵn trên máy (chép thủ công hoặc có sẵn theo bộ cài), lệnh sẽ **cài tại chỗ**, không tải lại.
+- Nếu plugin đã được cài, lệnh sẽ từ chối. Để lên bản mới, chạy `php artisan gp247:ext-update --type=plugin --key=GoogleCaptcha`.
+- Thêm `--json` vào cuối lệnh để nhận kết quả dạng máy đọc được (dùng cho script/CI).
+- Các bước cấu hình sau khi cài bên dưới vẫn giữ nguyên: bạn vẫn phải làm **Bước 3** (nhập Site Key & Secret Key) và **Bước 4** (bật captcha, chọn trang) thì ô captcha mới hiện.
+- Chi tiết: [Hướng dẫn cài đặt Plugin & Template](https://github.com/gp247net/gp247-docs/blob/main/extension/install-extension_vi.md) · [Tra cứu lệnh](https://github.com/gp247net/gp247-docs/blob/main/system/command-line-reference_vi.md).
+
 ## Bước 3 — Nhập Site Key & Secret Key
 
 1. Vẫn trong **Extension → Plugins**, nhấn vào **GoogleCaptcha** để mở màn cấu hình.
@@ -160,4 +181,4 @@ Không. Khóa được giữ nguyên vì vẫn lưu ở cùng vị trí cũ. B�
 
 ---
 
-<sub>📅 **Cập nhật lần cuối:** 2026-08-03 · ✍️ **Tác giả (Author):** GP247</sub>
+<sub>📅 **Cập nhật lần cuối:** 2026-09-25 · ✍️ **Tác giả (Author):** GP247</sub>
